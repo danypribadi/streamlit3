@@ -3,7 +3,7 @@ import plotly.express as px  # pip install plotly-express
 import streamlit as st  # pip install streamlit
 
 # emojis: https://www.webfx.com/tools/emoji-cheat-sheet/
-st.set_page_config(page_title="Denda PNBP", page_icon=":bar_chart:", layout="wide")
+st.set_page_config(page_title="PNBP PPPK", page_icon=":bar_chart:", layout="wide")
 
 # ---- READ EXCEL ----
 @st.cache
@@ -14,7 +14,7 @@ def get_data_from_excel():
         sheet_name="Rekapitulasi Denda PNBP",
         #skiprows=3,
         usecols="A:D",
-        nrows=28,
+        nrows=136,
     )       
     df.dropna(inplace=True) 
     
@@ -25,11 +25,10 @@ def get_data_from_excel():
 df = get_data_from_excel() 
 
 # ---- SIDEBAR ----
-st.sidebar.header("Silahkan Pilih:")
-pnbp = st.sidebar.multiselect(
-    "Denda Administratif atas Keterlambatan:",
-    options=df["Jenis_PNBP"].unique(),
-    default=df["Jenis_PNBP"].unique()
+st.sidebar.header("Silahkan Pilih Jenis PNBP:")
+pnbp = st.sidebar.selectbox(
+    "",
+    df["Jenis_PNBP"].unique()
 )
 
 #OAA = st.sidebar.multiselect(
@@ -49,7 +48,7 @@ df_selection = df.query(
 )
 
 # ---- MAINPAGE ----
-st.title(":bar_chart: Pendapatan Denda PNBP Satker PPPK Tahun 2021")
+st.title(":bar_chart: PNBP Satker PPPK Tahun 2021")
 st.markdown("##")
 
 # TOP KPI's
@@ -60,13 +59,13 @@ rata_denda = int(df_selection["Rupiah"].mean())
 
 left_column, middle_column, right_column = st.columns(3)
 with left_column:
-    st.subheader("Total Denda:")
+    st.subheader("Total PNBP:")
     st.subheader(f"Rp {total_denda:,}")
 #with middle_column:
     #st.subheader("Average Rating:")
     #st.subheader(f"{average_rating} {star_rating}")
 with right_column:
-    st.subheader("Rata-rata Denda:")
+    st.subheader("Rata-rata PNBP:")
     st.subheader(f"Rp {rata_denda:,}")
 
 st.markdown("""---""")
@@ -80,7 +79,7 @@ fig_product_sales = px.bar(
     x=sales_by_product_line.index,
     y="Rupiah",
     #orientation="h",
-    title="<b>Jumlah Denda</b>",
+    title="<b>Jumlah PNBP</b>",
     color_discrete_sequence=["#0083B8"] * len(sales_by_product_line),
     template="plotly_white",
     #width = 800,
