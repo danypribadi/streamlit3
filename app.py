@@ -15,15 +15,23 @@ def get_data_from_excel():
         #skiprows=3,
         usecols="A:D",
         nrows=136,
-    )       
+    )
     df.dropna(inplace=True) 
-    
     # Add 'hour' column to dataframe
     # df["hour"] = pd.to_datetime(df["Time"], format="%H:%M:%S").dt.hour
     return df
 
-df = get_data_from_excel() 
+df = get_data_from_excel()
 
+df1 = pd.read_excel(
+    "Rekap PNBP September 2021.xlsx",
+    sheet_name="Rekapitulasi Denda PNBP",
+    #skiprows=3,
+    usecols="A:F",
+    nrows=136, 
+)
+#df1.dropna(inplace=True)
+        
 # ---- SIDEBAR ----
 st.sidebar.header("Silahkan Pilih Jenis PNBP:")
 pnbp = st.sidebar.selectbox(
@@ -59,7 +67,7 @@ rata_denda = int(df_selection["Rupiah"].mean())
 
 left_column, middle_column, right_column = st.columns(3)
 with left_column:
-    st.subheader("Total PNBP:")
+    st.subheader("Jumlah PNBP:")
     st.subheader(f"Rp {total_denda:,}")
 #with middle_column:
     #st.subheader("Average Rating:")
@@ -91,8 +99,6 @@ fig_product_sales.update_layout(
 )
 
 #st.plotly_chart(fig_product_sales)
-
-#st.markdown("""---""")
 
 # SALES BY KODE BILING [BAR CHART]
 sales_by_kode_biling = (
@@ -137,6 +143,27 @@ left_column, right_column = st.columns(2)
 left_column.plotly_chart(fig_product_sales, use_container_width=True)
 right_column.plotly_chart(fig_kode_biling, use_container_width=True)
 
+st.markdown("""---""")
+
+# PERHITUNGAN PERSENTASE PNBP
+total_pnbp = int(df1["Rupiah"].sum())
+target_pnbp = round(df1.iloc[0, 5])
+x = total_pnbp / target_pnbp 
+persen_pnbp = str(round(x*100)) + '%'
+
+#target_pnbp = int(df1["Target"].sum())
+#df1.dropna(inplace=True)
+
+left_column, middle_column, right_column = st.columns(3)
+with left_column:
+    st.subheader("Target PNBP:")
+    st.subheader(f"Rp {target_pnbp:,}")
+with middle_column:
+    st.subheader("Total PNBP:")
+    st.subheader(f"Rp {total_pnbp:,}")
+with right_column:
+    st.subheader("Persentase PNBP:")
+    st.subheader(f"Rp {persen_pnbp} :trophy:")
 
 # ---- HIDE STREAMLIT STYLE ----
 hide_st_style = """
