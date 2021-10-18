@@ -15,11 +15,7 @@ def get_data_from_excel():
         #skiprows=3,
         usecols="A:D",
         nrows=136,
-<<<<<<< HEAD
     )
-=======
-    )       
->>>>>>> 54c4f34ae3d00ea837e3e04720c9f2725e72f1c8
     df.dropna(inplace=True) 
     # Add 'hour' column to dataframe
     # df["hour"] = pd.to_datetime(df["Time"], format="%H:%M:%S").dt.hour
@@ -71,11 +67,7 @@ rata_denda = int(df_selection["Rupiah"].mean())
 
 left_column, middle_column, right_column = st.columns(3)
 with left_column:
-<<<<<<< HEAD
     st.subheader("Jumlah PNBP:")
-=======
-    st.subheader("Total PNBP:")
->>>>>>> 54c4f34ae3d00ea837e3e04720c9f2725e72f1c8
     st.subheader(f"Rp {total_denda:,}")
 #with middle_column:
     #st.subheader("Average Rating:")
