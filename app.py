@@ -1,6 +1,25 @@
 import pandas as pd  # pip install pandas openpyxl
 import plotly.express as px  # pip install plotly-express
 import streamlit as st  # pip install streamlit
+import json
+import requests  # pip install requests
+from streamlit_lottie import st_lottie  # pip install streamlit-lottie
+
+# GitHub: https://github.com/andfanilo/streamlit-lottie
+# Lottie Files: https://lottiefiles.com/
+
+def load_lottiefile(filepath: str):
+    with open(filepath, "r") as f:
+        return json.load(f)
+
+#def load_lottieurl(url: str):
+    #r = requests.get(url)
+    #if r.status_code != 200:
+        #return None
+    #return r.json()
+
+lottie_coding = load_lottiefile("lottiefiles/finance.json")  # replace link to local lottie file
+#lottie_hello = load_lottieurl("https://assets9.lottiefiles.com/packages/lf20_M9p23l.json")
 
 # emojis: https://www.webfx.com/tools/emoji-cheat-sheet/
 st.set_page_config(page_title="PNBP PPPK", page_icon=":bar_chart:", layout="wide")
@@ -69,7 +88,19 @@ left_column, middle_column, right_column = st.columns(3)
 with left_column:
     st.subheader("Jumlah PNBP:")
     st.subheader(f"Rp {total_denda:,}")
-#with middle_column:
+with middle_column:
+    #st.subheader('')
+    st_lottie(
+        lottie_coding,
+        speed=3,
+        reverse=False,
+        loop=True,
+        quality="low", # medium ; high
+        renderer="svg", # canvas
+        height=125,
+        width=200,
+        key=None,
+    )
     #st.subheader("Average Rating:")
     #st.subheader(f"{average_rating} {star_rating}")
 with right_column:
@@ -163,7 +194,7 @@ with middle_column:
     st.subheader(f"Rp {total_pnbp:,}")
 with right_column:
     st.subheader("Persentase PNBP:")
-    st.subheader(f"Rp {persen_pnbp} :trophy:")
+    st.subheader(f"Rp {persen_pnbp} :trophy:")   
 
 # ---- HIDE STREAMLIT STYLE ----
 hide_st_style = """
