@@ -52,9 +52,9 @@ df1 = pd.read_excel(
 #df1.dropna(inplace=True)
         
 # ---- SIDEBAR ----
-st.sidebar.header("Silahkan Pilih Jenis PNBP:")
+st.sidebar.header("PNBP Satker PPPK Tahun 2021")
 pnbp = st.sidebar.selectbox(
-    "",
+    "Silahkan Pilih Jenis PNBP:",
     df["Jenis_PNBP"].unique()
 )
 
@@ -75,8 +75,11 @@ df_selection = df.query(
 )
 
 # ---- MAINPAGE ----
-st.title(":bar_chart: PNBP Satker PPPK Tahun 2021")
-st.markdown("##")
+#st.title(":bar_chart: PNBP Satker PPPK Tahun 2021")
+#st.markdown("##")
+#st.title = ':bar_chart: <p style="font-family:Courier; color:Blue; font-size: 20px;">PNBP Satker PPPK Tahun 2021</p>'
+
+#st.markdown(st.title, unsafe_allow_html=True)
 
 # TOP KPI's
 total_denda = int(df_selection["Rupiah"].sum())
@@ -86,7 +89,7 @@ rata_denda = int(df_selection["Rupiah"].mean())
 
 left_column, middle_column, right_column = st.columns(3)
 with left_column:
-    st.subheader("Jumlah PNBP:")
+    st.subheader("Jumlah PNBP :")
     st.subheader(f"Rp {total_denda:,}")
 with middle_column:
     #st.subheader('')
@@ -97,14 +100,14 @@ with middle_column:
         loop=True,
         quality="low", # medium ; high
         renderer="svg", # canvas
-        height=125,
+        height=100,
         width=200,
         key=None,
     )
     #st.subheader("Average Rating:")
     #st.subheader(f"{average_rating} {star_rating}")
 with right_column:
-    st.subheader("Rata-rata PNBP:")
+    st.subheader("Rata-rata PNBP :")
     st.subheader(f"Rp {rata_denda:,}")
 
 st.markdown("""---""")
@@ -187,13 +190,13 @@ persen_pnbp = str(round(x*100)) + '%'
 
 left_column, middle_column, right_column = st.columns(3)
 with left_column:
-    st.subheader("Target PNBP:")
+    st.subheader("Target PNBP :")
     st.subheader(f"Rp {target_pnbp:,}")
 with middle_column:
-    st.subheader("Total PNBP:")
+    st.subheader("Total PNBP :")
     st.subheader(f"Rp {total_pnbp:,}")
 with right_column:
-    st.subheader("Persentase PNBP:")
+    st.subheader("Persentase PNBP :")
     st.subheader(f"Rp {persen_pnbp} :trophy:")   
 
 # ---- HIDE STREAMLIT STYLE ----
